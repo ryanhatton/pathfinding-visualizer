@@ -1,6 +1,24 @@
-# React + TypeScript + Vite
+# Pathfinder Algorithm Visualizer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Learning algorithms can be tough, so as an attempt to both learn some of the more popular pathfinding algorithms, I created am interactive canvas that simulates the following pathfinding algorithms:
+* A star
+* Breadth-first search
+* Depth-first search
+* Dijkstra
+
+## Outline of Each Algorthim (for my knowledge and yours):
+
+
+
+
+
+
+
+
+## Tech Details
+This project has been created using Vite, Typescript and 
+
+
 
 Currently, two official plugins are available:
 
@@ -48,3 +66,16 @@ export default tseslint.config({
   },
 })
 ```
+
+
+## Get Started
+```bash
+pnpm install
+```
+```bash
+npm run dev
+```
+
+
+## Credits
+* 
