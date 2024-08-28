@@ -4,6 +4,7 @@ import { PathfindingProvider } from "./context/PathfindingContext";
 import { SpeedProvider } from "./context/SpeedContext";
 import { TileProvider } from "./context/TileContext";
 import { Nav } from "./components/Nav";
+import { Footer } from "./components/Footer";
 
 function App() {
   const isVisualizationRunningRef = useRef(false);
@@ -15,7 +16,9 @@ function App() {
           <div className="h-screen w-screen flex flex-col bg-[#131416]">
             <Nav isVisualizationRunningRef={isVisualizationRunningRef} />
             <Grid isVisualizationRunningRef={isVisualizationRunningRef} />
+            
           </div>
+          <Footer />
         </SpeedProvider>
       </TileProvider>
     </PathfindingProvider>
