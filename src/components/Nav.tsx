@@ -96,34 +96,36 @@ export function Nav({
       <h1 className="text-6xl font-bold mb-4 text-center w-full text-sky-500" style={{ fontFamily: 'MazeFont, sans-serif' }}>
         Pathfinding Visualizer
       </h1>
-      <div className="flex sm:flex-row flex-col sm:space-x-4 space-y-3 sm:space-y-0 items-end w-full max-w-4xl justify-center">
-        <Select
-          label="Maze Algorithm"
-          value={maze}
-          options={MAZES}
-          onChange={(e) => {
-            handleGenerateMaze(e.target.value as MazeType);
-          }}
-          isDisabled={isVisualizationRunningRef.current || isVisualizationComplete}
-        />
-        <Select
-          label="Pathfinding Algorithm"
-          value={algorithm}
-          isDisabled={isVisualizationRunningRef.current || isDisabled || isVisualizationComplete}
-          options={PATHFINDING_ALGORITHMS}
-          onChange={(e) => {
-            setAlgorithm(e.target.value as AlgorithmType);
-          }}
-        />
-        <Select
-          label="Speed"
-          value={speed}
-          options={SPEEDS}
-          isDisabled={isVisualizationRunningRef.current || isDisabled || isVisualizationComplete}
-          onChange={(e) => {
-            setSpeed(parseInt(e.target.value) as SpeedType);
-          }}
-        />
+      <div className="flex sm:flex-row flex-col sm:space-x-4 space-y-3 sm:space-y-0 items-center sm:items-end w-full max-w-4xl justify-center">
+        <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 items-center sm:items-end">
+          <Select
+            label="Maze Algorithm"
+            value={maze}
+            options={MAZES}
+            onChange={(e) => {
+              handleGenerateMaze(e.target.value as MazeType);
+            }}
+            isDisabled={isVisualizationRunningRef.current || isVisualizationComplete}
+          />
+          <Select
+            label="Pathfinding Algorithm"
+            value={algorithm}
+            isDisabled={isVisualizationRunningRef.current || isDisabled || isVisualizationComplete}
+            options={PATHFINDING_ALGORITHMS}
+            onChange={(e) => {
+              setAlgorithm(e.target.value as AlgorithmType);
+            }}
+          />
+          <Select
+            label="Speed"
+            value={speed}
+            options={SPEEDS}
+            isDisabled={isVisualizationRunningRef.current || isDisabled || isVisualizationComplete}
+            onChange={(e) => {
+              setSpeed(parseInt(e.target.value) as SpeedType);
+            }}
+          />
+        </div>
         <PlayButton
           isDisabled={isDisabled}
           isGraphVisualized={isGraphVisualized}
