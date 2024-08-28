@@ -32,37 +32,44 @@ export function Nav({
     setIsGraphVisualized,
     algorithm,
     setAlgorithm,
+    isVisualizationComplete,
+    setIsVisualizationComplete,
   } = usePathfinding();
   const { startTile, endTile } = useTile();
   const { speed, setSpeed } = useSpeed();
 
   const handleGenerateMaze = (maze: MazeType) => {
-    if (maze === "NONE") {
-      setMaze(maze);
-      resetGrid({ grid, startTile, endTile });
-      return;
-    }
     setMaze(maze);
-    setIsDisabled(true);
-    runMazeAlgorithm({
-      maze,
-      grid,
-      startTile,
-      endTile,
-      setIsDisabled,
-      speed,
-    });
-    const newGrid = grid.slice();
-    setGrid(newGrid);
+    resetGrid({ grid, startTile, endTile });
     setIsGraphVisualized(false);
+    setIsVisualizationComplete(false);
+
+    if (maze !== "NONE") {
+      setIsDisabled(true);
+      runMazeAlgorithm({
+        maze,
+        grid,
+        startTile,
+        endTile,
+        setIsDisabled,
+        speed,
+      });
+    }
   };
 
   const handlerRunVisualizer = () => {
     if (isGraphVisualized) {
       setIsGraphVisualized(false);
+      setIsVisualizationComplete(false);
       resetGrid({ grid: grid.slice(), startTile, endTile });
+      setMaze("NONE");
+      setAlgorithm("BFS");
+      setSpeed(0.5);
       return;
     }
+
+    isVisualizationRunningRef.current = true;
+    setIsDisabled(true);
 
     const { traversedTiles, path } = runPathfindingAlgorithm({
       algorithm,
@@ -72,14 +79,14 @@ export function Nav({
     });
 
     animatePath(traversedTiles, path, startTile, endTile, speed);
-    setIsDisabled(true);
-    isVisualizationRunningRef.current = true;
+    
     setTimeout(() => {
       const newGrid = grid.slice();
       setGrid(newGrid);
       setIsGraphVisualized(true);
       setIsDisabled(false);
       isVisualizationRunningRef.current = false;
+      setIsVisualizationComplete(true);
     }, SLEEP_TIME * (traversedTiles.length + SLEEP_TIME * 2) + EXTENDED_SLEEP_TIME * (path.length + 60) * SPEEDS.find((s) => s.value === speed)!.value);
   };
 
@@ -97,11 +104,12 @@ export function Nav({
             onChange={(e) => {
               handleGenerateMaze(e.target.value as MazeType);
             }}
+            isDisabled={isVisualizationRunningRef.current || isVisualizationComplete}
           />
           <Select
             label="Pathfinding Algorithm"
             value={algorithm}
-            isDisabled={isDisabled}
+            isDisabled={isVisualizationRunningRef.current || isDisabled || isVisualizationComplete}
             options={PATHFINDING_ALGORITHMS}
             onChange={(e) => {
               setAlgorithm(e.target.value as AlgorithmType);
@@ -111,7 +119,7 @@ export function Nav({
             label="Speed"
             value={speed}
             options={SPEEDS}
-            isDisabled={isDisabled}
+            isDisabled={isVisualizationRunningRef.current || isDisabled || isVisualizationComplete}
             onChange={(e) => {
               setSpeed(parseInt(e.target.value) as SpeedType);
             }}
