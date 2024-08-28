@@ -91,7 +91,7 @@ export function Nav({
         </h1>
         <div className="flex sm:items-end items-center justify-start sm:justify-between sm:flex-row flex-col sm:space-y-0 space-y-3 sm:py-0 py-4 sm:space-x-4">
           <Select
-            label="Maze"
+            label="Maze Algorithm"
             value={maze}
             options={MAZES}
             onChange={(e) => {
@@ -99,7 +99,7 @@ export function Nav({
             }}
           />
           <Select
-            label="Graph"
+            label="Pathfinding Algorithm"
             value={algorithm}
             isDisabled={isDisabled}
             options={PATHFINDING_ALGORITHMS}
