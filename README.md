@@ -44,3 +44,11 @@
    ```bash
    pnpm run dev
    ```
+
+## Next Updates
+- Add more robust drawing functionality for manually creating obstacles
+- Add intermediate destinations for pathfinding
+- Add support for custom weights for different terrain
+- Terrain based map generation
+- Add support for custom heuristics for A*
+- Add support for custom start and end points

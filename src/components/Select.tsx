@@ -1,29 +1,22 @@
 import { ChangeEvent } from "react";
 
-export function Select({
-  value,
-  onChange,
-  options,
-  label,
-  isDisabled,
-}: {
-  value: string | number;
+interface SelectProps {
   label: string;
-  onChange: (value: ChangeEvent<HTMLSelectElement>) => void;
-  options: { value: string | number; name: string }[];
+  value: string | number;
+  options: { name: string; value: string | number }[];
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   isDisabled?: boolean;
-}) {
+}
+
+export function Select({ label, value, options, onChange, isDisabled }: SelectProps) {
   return (
-    <div className="flex flex-col items-start gap-1">
-      <label className="text-xs text-gray-300 ml-1" htmlFor={label}>
-        {label}
-      </label>
+    <div className="flex flex-col w-full sm:w-auto">
+      <label className="mb-1 text-sm font-medium text-gray-300">{label}</label>
       <select
-        disabled={isDisabled}
-        className="bg-gray-700 disabled:pointer-events-none rounded-md cursor-pointer hover:bg-gray-800 transition ease-in active:ring-0 active:border-0 p-2 min-w-[200px] sm:min-w-full"
-        id={label}
         value={value}
         onChange={onChange}
+        disabled={isDisabled}
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 h-12"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>

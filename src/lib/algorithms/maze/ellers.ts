@@ -21,22 +21,41 @@ export const ellersAlgorithm = async (
     let nextSet = 1;
 
     for (let row = 1; row < MAX_ROWS - 1; row += 2) {
-      // Initialize sets for the row
-      sets = Array(MAX_COLS).fill(0).map((_, i) => i % 2 === 1 ? nextSet++ : 0);
+      // Initialize or update sets for the row
+      if (row === 1) {
+        sets = Array(MAX_COLS).fill(0).map((_, i) => i % 2 === 1 ? nextSet++ : 0);
+      } else {
+        for (let col = 1; col < MAX_COLS; col += 2) {
+          if (sets[col] === 0) {
+            sets[col] = nextSet++;
+          }
+        }
+      }
 
       // Create horizontal connections
       for (let col = 3; col < MAX_COLS - 1; col += 2) {
-        if (Math.random() < 0.5) {
+        if (Math.random() < 0.5 && sets[col] !== sets[col - 2]) {
+          const oldSet = sets[col];
           sets[col] = sets[col - 2];
+          // Merge sets
+          for (let i = 1; i < MAX_COLS; i += 2) {
+            if (sets[i] === oldSet) {
+              sets[i] = sets[col];
+            }
+          }
           await destroyWall(grid, row, col - 1, speed);
         }
       }
 
       // Create vertical connections
       if (row < MAX_ROWS - 2) {
+        const connectedSets = new Set<number>();
         for (let col = 1; col < MAX_COLS - 1; col += 2) {
-          if (Math.random() < 0.5 || isOnlyConnectionInSet(sets, col)) {
+          if (Math.random() < 0.5 || !connectedSets.has(sets[col])) {
             await destroyWall(grid, row + 1, col, speed);
+            connectedSets.add(sets[col]);
+          } else {
+            sets[col] = 0; // Reset the set for the next row
           }
         }
       }
@@ -69,9 +88,5 @@ const destroyWall = async (grid: GridType, row: number, col: number, speed: Spee
   grid[row][col].isWall = false;
   document.getElementById(`${row}-${col}`)!.className = TILE_STYLE;
   await sleep(10 * speed - 5);
-};
-
-const isOnlyConnectionInSet = (sets: number[], col: number): boolean => {
-  return sets.filter(set => set === sets[col]).length === 1;
 };
 
