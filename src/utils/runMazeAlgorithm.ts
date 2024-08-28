@@ -3,6 +3,9 @@ import recursiveDivision from "../lib/algorithms/maze/recursiveDivision";
 import { MAX_COLS, MAX_ROWS, SPEEDS } from "./constants";
 import { constructBorder } from "./constructBorder";
 import { GridType, MazeType, SpeedType, TileType } from "./types";
+import { ellersAlgorithm } from "../lib/algorithms/maze/ellers";
+import { kruskalAlgorithm } from "../lib/algorithms/maze/kruskal";
+import { recursiveBacktrackerAlgorithm } from "../lib/algorithms/maze/recursiveBacktracker";
 
 export const runMazeAlgorithm = async ({
   maze,
@@ -38,5 +41,11 @@ export const runMazeAlgorithm = async ({
     setTimeout(() => {
       setIsDisabled(false);
     }, 800 * currentSpeed);
+  } else if (maze === "ELLERS") {
+    await ellersAlgorithm(grid, setIsDisabled, speed);
+  } else if (maze === "KRUSKAL") {
+    await kruskalAlgorithm(grid, setIsDisabled, speed);
+  } else if (maze === "RECURSIVE_BACKTRACKER") {
+    await recursiveBacktrackerAlgorithm(grid, startTile, endTile, setIsDisabled, speed);
   }
 };
