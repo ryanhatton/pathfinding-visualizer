@@ -92,7 +92,7 @@ export function Nav({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[6rem] border-b shadow-gray-600 px-5 py-4">
+    <div className="flex flex-col items-center justify-center min-h-[6rem] px-5 pt-6">
       <h1 className="text-6xl font-bold mb-4 text-center w-full text-sky-500" style={{ fontFamily: 'MazeFont, sans-serif' }}>
         Pathfinding Visualizer
       </h1>

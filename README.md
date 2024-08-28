@@ -52,3 +52,7 @@
 - Terrain based map generation
 - Add support for custom heuristics for A*
 - Add support for custom start and end points
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
